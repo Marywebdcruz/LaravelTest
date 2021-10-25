@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PatientController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,8 +13,6 @@ use App\Http\Controllers\PatientController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/',function(){
+    return view('home');
 });
-
-Route::get('/patient', [PatientController::class, "index"]);
