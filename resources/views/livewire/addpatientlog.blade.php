@@ -14,11 +14,7 @@
                     </div>
                 @endif
 
-                @if($updatePatient)
-                    @include('livewire.update')
-                @else
-                    @include('livewire.create')
-                @endif
+                @include('livewire.patientlogcreate')
             </div>
         </div>
     </div>
@@ -26,45 +22,47 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <button class="btn btn-primary" wire:click="patientExport">Export</button>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Birthdate</th>
-                                <th>Action</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>SBP</th>
+                                <th>DBP</th>
+                                <th>BPM</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            @if (count($patients) > 0)
-                                @foreach ($patients as $patient)
+                            @if (count($patientlogs) > 0)
+                                @foreach ($patientlogs as $patient)
                                     <tr>
                                         <td>
-                                            {{$patient->name}}
+                                            {{$patient->date}}
                                         </td>
                                         <td>
-                                            {{$patient->email}}
+                                            {{$patient->date}}
                                         </td>
                                         <td>
-                                            {{$patient->mobile}}
+                                            {{$patient->sbp}}
                                         </td>
                                         <td>
-                                            {{$patient->birthdate}}
+                                            {{$patient->dbp}}
                                         </td>
                                         <td>
-                                            <a href="add-patient-log/{{$patient->id}}" class="btn btn-primary btn-sm">Add patient Log</a>
+                                            {{$patient->bpm}}
+                                        </td>
+                                        <!-- <td>
                                             <button wire:click="edit({{$patient->id}})" class="btn btn-primary btn-sm">Edit</button>
                                             <button onclick="deletePatient({{$patient->id}})" class="btn btn-danger btn-sm">Delete</button>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td colspan="3" align="center">
-                                        No Patients Found.
+                                        No Patient log Found.
                                     </td>
                                 </tr>
                             @endif
@@ -73,7 +71,7 @@
 
                     <div class="card-body">
                         <div class="pt-3">
-                            {{ $patients->links() }}
+                            {{ $patientlogs->links() }}
                         </div>
                     </div>
                 </div>

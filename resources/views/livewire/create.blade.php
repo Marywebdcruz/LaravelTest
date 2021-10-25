@@ -6,7 +6,7 @@
     </div>
     <div class="form-group mb-3">
         <label for="patientEmail">Email:</label>
-        <input type="text" class="form-control @error('email') is-invalid @enderror" id="patientEmail" placeholder="Enter Email" wire:model="email">
+        <input type="email" class="form-control @error('email') is-invalid @enderror" id="patientEmail" placeholder="Enter Email" wire:model="email">
         @error('email') <span class="text-danger">{{ $message }}</span>@enderror
     </div>
     <div class="form-group mb-3">

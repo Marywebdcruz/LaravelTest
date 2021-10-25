@@ -9,9 +9,9 @@ class PatientLogs extends Model
 {
     use HasFactory;
 
-    protected $table = 'patient_log'
+    protected $table = 'patient_log';
 
-    // protected $fillable = [
-    //     'patient_id', 'date', 'time', 'sbp', 'dbp', 'bpm', 'notes'
-    // ];
+    protected $fillable = [
+        'patient_id', 'date', 'time', 'sbp', 'dbp', 'bpm'
+    ];
 }

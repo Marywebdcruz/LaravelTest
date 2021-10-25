@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Patients as PatientsModel;
 use Livewire\WithPagination;
+use App\Exports\PatientsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Patients extends Component
 {
@@ -49,7 +51,7 @@ class Patients extends Component
     public function store(){
         // Validate Form Request
         $this->validate();
-        // try{
+        try{
             // Create Patient
             PatientsModel::create([
                 'name'=>$this->name,
@@ -67,17 +69,17 @@ class Patients extends Component
 
             // Reset Form Fields After Creating Patient
             $this->resetFields();
-        // }catch(\Exception $e){
-        //     // Set Flash Message
-        //     //session()->flash('error','Something goes wrong while creating Patient!!');
-        //     $this->dispatchBrowserEvent('alert',[
-        //         'type'=>'error',
-        //         'message'=>"Something goes wrong while creating patient!!"
-        //     ]);
+        }catch(\Exception $e){
+            // Set Flash Message
+            //session()->flash('error','Something goes wrong while creating Patient!!');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something goes wrong while creating patient!!"
+            ]);
 
         //     // Reset Form Fields After Creating Patient
             $this->resetFields();
-        // }
+        }
     }
 
     public function edit($id){
@@ -101,7 +103,7 @@ class Patients extends Component
         // Validate request
         $this->validate();
         
-        // try{
+        try{
 
             // Update Patient
             PatientsModel::find($this->patient_id)->fill([
@@ -118,14 +120,14 @@ class Patients extends Component
             ]);
     
             $this->cancel();
-        // }catch(\Exception $e){
-            //session()->flash('error','Something goes wrong while updating patient!!');
-            // $this->dispatchBrowserEvent('alert',[
-            //     'type'=>'error',
-            //     'message'=>"Something goes wrong while updating patient!!"
-            // ]);
-            // $this->cancel();
-        // }
+        }catch(\Exception $e){
+            session()->flash('error','Something goes wrong while updating patient!!');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something goes wrong while updating patient!!"
+            ]);
+            $this->cancel();
+        }
     }
 
     public function destroy($id){
@@ -143,9 +145,8 @@ class Patients extends Component
         }
     }
 
-    public function addlog($id)
+    public function patientExport()
     {
-        $patient = PatientsModel::findOrFail($id);
-        return view('livewire.add_patient_log', ['patients' => $patients]);
+        return Excel::download(new PatientsExport, 'patients.xlsx');
     }
 }
